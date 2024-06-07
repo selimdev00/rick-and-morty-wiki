@@ -90,7 +90,7 @@ const genders = [
       class="grid xl:grid-cols-[300px_1fr_300px] items-start max-w-[1400px] mx-auto gap-12"
     >
       <form
-        class="p-4 space-y-4 lg:sticky top-0 z-10"
+        class="p-4 space-y-4 xl:sticky top-0 z-10"
         @submit.prevent="applyFilters"
       >
         <h1>Filter</h1>
