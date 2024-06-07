@@ -27,7 +27,7 @@ console.log(data.value);
 const catalog = ref();
 
 const onPage = (e) => {
-  page.value = e.page + 1;
+  page.value = e.page;
   catalog.value.scrollIntoView();
 };
 
