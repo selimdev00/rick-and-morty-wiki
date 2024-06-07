@@ -8,7 +8,7 @@
       </h1>
 
       <img
-        src="/confidential.png"
+        src="/confidential.webp"
         alt=""
         class="absolute w-[50vw] top-0 right-0"
       />
