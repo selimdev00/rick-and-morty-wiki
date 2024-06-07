@@ -11,7 +11,7 @@ const handleError = () => clearError({ redirect: "/" });
 <template>
   <NuxtLayout>
     <div
-      class="bg-[url('/404.png')] h-screen flex items-center justify-center text-center"
+      class="bg-[url('/404.jpg')] bg-no-repeat bg-cover bg-right h-screen flex items-center justify-center text-center"
     >
       <div class="p-4 rounded-xl bg-black/80 space-y-2">
         <h2 class="text-3xl">{{ error.statusCode }}</h2>

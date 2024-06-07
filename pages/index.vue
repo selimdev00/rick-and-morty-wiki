@@ -157,7 +157,7 @@ const genders = [
           <h1 class="text-xl">Something went wrong</h1>
           <p>Error from server: {{ error }}</p>
 
-          <img src="/error.png" alt="Sorry about that :(" class="rounded-lg" />
+          <img src="/error.jpg" alt="Sorry about that :(" class="rounded-lg" />
         </div>
 
         <div v-else-if="pending" class="p-4 grid grid-cols-2 gap-4">
