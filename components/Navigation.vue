@@ -18,7 +18,7 @@ const route = useRoute();
 </script>
 
 <template>
-  <div class="sticky top-4 space-y-2 pt-4">
+  <div class="sticky top-4 space-y-2 p-4">
     <p class="text-sm text-gray-400">See also</p>
 
     <nav>
