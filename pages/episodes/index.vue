@@ -1,41 +1,41 @@
 <script lang="ts" setup>
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-const perPage = 20;
-const page = ref(route.query.page || 1);
+const perPage = 20
+const page = ref(route.query.page || 1)
 const filter = ref({
-  name: route.query.name || "",
-});
+  name: route.query.name || '',
+})
 
 const query = reactive({
   page,
   ...filter.value,
-});
+})
 
 watchEffect(() => {
-  router.push({ query: { ...route.query, page: page.value, ...query } });
-});
+  router.push({ query: { ...route.query, page: page.value, ...query } })
+})
 
-const { data, pending, error } = useQuery("/episode", {
+const { data, pending, error } = useQuery('/episode', {
   query,
   lazy: true,
-});
+})
 
-const catalog = ref();
+const catalog = ref()
 
 const onPage = (e) => {
-  page.value = e.page;
-  catalog.value.scrollIntoView();
-};
+  page.value = e.page
+  catalog.value.scrollIntoView()
+}
 
 const applyFilters = () => {
   for (const key in filter.value) {
-    query[key] = filter.value[key];
+    query[key] = filter.value[key]
   }
 
-  query.page = 1;
-};
+  query.page = 1
+}
 </script>
 
 <template>
@@ -53,10 +53,17 @@ const applyFilters = () => {
 
         <div class="flex flex-col">
           <label for="name">Name</label>
-          <InputText id="name" v-model="filter.name" />
+          <InputText
+            id="name"
+            v-model="filter.name"
+          />
         </div>
 
-        <Button type="submit" class="w-full" :disabled="pending">
+        <Button
+          type="submit"
+          class="w-full"
+          :disabled="pending"
+        >
           {{ pending ? "Loading..." : "Apply" }}
         </Button>
       </form>
@@ -66,20 +73,41 @@ const applyFilters = () => {
           v-if="error"
           class="text-center space-y-2 flex items-center justify-center flex-col h-full"
         >
-          <h1 class="text-xl">Something went wrong</h1>
+          <h1 class="text-xl">
+            Something went wrong
+          </h1>
           <p>Error from server: {{ error }}</p>
 
-          <img src="/error.jpg" alt="Sorry about that :(" class="rounded-lg" />
+          <img
+            src="/error.jpg"
+            alt="Sorry about that :("
+            class="rounded-lg"
+          >
         </div>
 
-        <div v-else-if="pending" class="p-4 grid grid-cols-2 gap-4">
-          <Skeleton v-for="i in perPage" :key="i" height="24rem" />
+        <div
+          v-else-if="pending"
+          class="p-4 grid grid-cols-2 gap-4"
+        >
+          <Skeleton
+            v-for="i in perPage"
+            :key="i"
+            height="24rem"
+          />
         </div>
 
         <div v-else-if="data.results?.length">
-          <div class="p-4 grid sm:grid-cols-2 gap-4" ref="catalog">
-            <Card v-for="card in data.results" :key="card.id">
-              <template #title>{{ card.name }}</template>
+          <div
+            ref="catalog"
+            class="p-4 grid sm:grid-cols-2 gap-4"
+          >
+            <Card
+              v-for="card in data.results"
+              :key="card.id"
+            >
+              <template #title>
+                {{ card.name }}
+              </template>
 
               <template #content>
                 <ul>
@@ -98,10 +126,10 @@ const applyFilters = () => {
 
           <Paginator
             :first="page * perPage"
-            @page="onPage"
             :rows="perPage"
-            :totalRecords="data.info.count"
+            :total-records="data.info.count"
             class="sticky bottom-0"
+            @page="onPage"
           >
             <template #start="slotProps">
               <div class="flex gap-2 flex-wrap">

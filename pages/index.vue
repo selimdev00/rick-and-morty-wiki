@@ -1,85 +1,85 @@
 <script lang="ts" setup>
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-const perPage = 20;
-const page = ref(route.query.page || 1);
+const perPage = 20
+const page = ref(route.query.page || 1)
 const filter = ref({
-  name: route.query.name || "",
-  status: route.query.status || "",
-  gender: route.query.gender || "",
-});
+  name: route.query.name || '',
+  status: route.query.status || '',
+  gender: route.query.gender || '',
+})
 
 const query = reactive({
   page,
   ...filter.value,
-});
+})
 
 watchEffect(() => {
-  router.push({ query: { ...route.query, page: page.value, ...query } });
-});
+  router.push({ query: { ...route.query, page: page.value, ...query } })
+})
 
-const { data, pending, error } = useQuery("/character", {
+const { data, pending, error } = useQuery('/character', {
   query,
   lazy: true,
-});
+})
 
-const catalog = ref();
+const catalog = ref()
 
 const onPage = (e) => {
-  page.value = e.page;
-  catalog.value.scrollIntoView();
-};
+  page.value = e.page
+  catalog.value.scrollIntoView()
+}
 
 const applyFilters = () => {
   for (const key in filter.value) {
-    query[key] = filter.value[key];
+    query[key] = filter.value[key]
   }
 
-  query.page = 1;
-};
+  query.page = 1
+}
 
 const statuses = [
   {
-    label: "None",
-    value: "",
+    label: 'None',
+    value: '',
   },
   {
-    label: "Alive",
-    value: "alive",
+    label: 'Alive',
+    value: 'alive',
   },
   {
-    label: "Dead",
-    value: "dead",
+    label: 'Dead',
+    value: 'dead',
   },
   {
-    label: "Unknown",
-    value: "unknown",
+    label: 'Unknown',
+    value: 'unknown',
   },
-];
+]
 
 const genders = [
   {
-    label: "None",
-    value: "",
+    label: 'None',
+    value: '',
   },
   {
-    label: "Male",
-    value: "male",
+    label: 'Male',
+    value: 'male',
   },
   {
-    label: "Female",
-    value: "female",
+    label: 'Female',
+    value: 'female',
   },
   {
-    label: "Genderless",
-    value: "genderless",
+    label: 'Genderless',
+    value: 'genderless',
   },
   {
-    label: "Unknown",
-    value: "unknown",
+    label: 'Unknown',
+    value: 'unknown',
   },
-];
+]
 </script>
 
 <template>
@@ -97,7 +97,10 @@ const genders = [
 
         <div class="flex flex-col">
           <label for="name">Name</label>
-          <InputText id="name" v-model="filter.name" />
+          <InputText
+            id="name"
+            v-model="filter.name"
+          />
         </div>
 
         <div class="flex flex-col gap-1">
@@ -111,11 +114,14 @@ const genders = [
             >
               <RadioButton
                 v-model="filter.status"
-                :inputId="`status-${item.label}`"
+                :input-id="`status-${item.label}`"
                 name="status"
                 :value="item.value"
               />
-              <label :for="`status-${item.label}`" class="ml-2">{{
+              <label
+                :for="`status-${item.label}`"
+                class="ml-2"
+              >{{
                 item.label
               }}</label>
             </div>
@@ -133,18 +139,25 @@ const genders = [
             >
               <RadioButton
                 v-model="filter.gender"
-                :inputId="`gender-${item.label}`"
+                :input-id="`gender-${item.label}`"
                 name="status"
                 :value="item.value"
               />
-              <label :for="`gender-${item.label}`" class="ml-2">{{
+              <label
+                :for="`gender-${item.label}`"
+                class="ml-2"
+              >{{
                 item.label
               }}</label>
             </div>
           </div>
         </div>
 
-        <Button type="submit" class="w-full" :disabled="pending">
+        <Button
+          type="submit"
+          class="w-full"
+          :disabled="pending"
+        >
           {{ pending ? "Loading..." : "Apply" }}
         </Button>
       </form>
@@ -154,31 +167,47 @@ const genders = [
           v-if="error"
           class="text-center space-y-2 flex items-center justify-center flex-col h-full"
         >
-          <h1 class="text-xl">Something went wrong</h1>
+          <h1 class="text-xl">
+            Something went wrong
+          </h1>
           <p>Error from server: {{ error }}</p>
 
-          <img src="/error.jpg" alt="Sorry about that :(" class="rounded-lg" />
+          <img
+            src="/error.jpg"
+            alt="Sorry about that :("
+            class="rounded-lg"
+          >
         </div>
 
-        <div v-else-if="pending" class="p-4 grid grid-cols-2 gap-4">
-          <Skeleton v-for="i in perPage" :key="i" height="24rem" />
+        <div
+          v-else-if="pending"
+          class="p-4 grid grid-cols-2 gap-4"
+        >
+          <Skeleton
+            v-for="i in perPage"
+            :key="i"
+            height="24rem"
+          />
         </div>
 
         <div v-else-if="data.results?.length">
-          <div class="p-4 grid sm:grid-cols-2 gap-4" ref="catalog">
+          <div
+            ref="catalog"
+            class="p-4 grid sm:grid-cols-2 gap-4"
+          >
             <CatalogCard
               v-for="card in data.results"
-              :item="card"
               :key="card.id"
+              :item="card"
             />
           </div>
 
           <Paginator
             :first="page * perPage"
-            @page="onPage"
             :rows="perPage"
-            :totalRecords="data.info.count"
+            :total-records="data.info.count"
             class="sticky bottom-0"
+            @page="onPage"
           >
             <template #start="slotProps">
               <div class="flex gap-2 flex-wrap">

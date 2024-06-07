@@ -11,7 +11,7 @@
         src="/confidential.webp"
         alt=""
         class="absolute w-[50vw] top-0 right-0"
-      />
+      >
     </div>
   </div>
 </template>

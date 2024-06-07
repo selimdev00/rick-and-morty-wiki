@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { useDark } from "@vueuse/core";
+import { useDark } from '@vueuse/core'
 
-const isDark = useDark();
+const isDark = useDark()
 
-isDark.value = true;
+isDark.value = true
 </script>
 
 <template>

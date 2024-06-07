@@ -60,8 +60,6 @@ const handleKeyDown = (event: KeyboardEvent) => {
   }
 };
 
-const route = useRoute();
-
 const attributeList = computed(() => {
   return [
     {
@@ -99,11 +97,11 @@ const attributeList = computed(() => {
 <template>
   <figure
     ref="flipContainer"
+    tabindex="0"
+    class="flip-container relative min-h-[500px] cursor-pointer rounded-3xl"
     @mousemove="handleMouseMove"
     @mouseleave="resetRotation"
     @keydown="handleKeyDown"
-    tabindex="0"
-    class="flip-container relative min-h-[500px] cursor-pointer rounded-3xl"
   >
     <div
       class="flip-card-front absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-3xl bg-cover bg-center transition-all duration-1000 ease-in-out bg-slate-950"
@@ -113,7 +111,9 @@ const attributeList = computed(() => {
     <figcaption
       class="flip-card-back absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center gap-3 rounded-3xl bg-slate-950 p-4 text-slate-100 transition-all duration-1000 ease-in-out"
     >
-      <h2 class="mb-2 text-2xl font-bold text-center">{{ item.name }}</h2>
+      <h2 class="mb-2 text-2xl font-bold text-center">
+        {{ item.name }}
+      </h2>
 
       <img
         :src="item.image"

@@ -5,7 +5,6 @@
     <a
       href="https://selimdev.vercel.app/"
       class="hover:text-primary transition-colors"
-      >selimdev</a
-    >
+    >selimdev</a>
   </footer>
 </template>
