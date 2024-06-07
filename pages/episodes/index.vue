@@ -22,8 +22,6 @@ const { data, pending, error } = useQuery("/episode", {
   lazy: true,
 });
 
-console.log(data.value);
-
 const catalog = ref();
 
 const onPage = (e) => {
@@ -75,7 +73,7 @@ const applyFilters = () => {
         </div>
 
         <div v-else-if="pending" class="p-4 grid grid-cols-2 gap-4">
-          <Skeleton v-for="i in 20" :key="i" height="24rem" />
+          <Skeleton v-for="i in perPage" :key="i" height="24rem" />
         </div>
 
         <div v-else-if="data.results?.length">
@@ -99,9 +97,9 @@ const applyFilters = () => {
           </div>
 
           <Paginator
-            :first="page * 20"
+            :first="page * perPage"
             @page="onPage"
-            :rows="20"
+            :rows="perPage"
             :totalRecords="data.info.count"
             class="sticky bottom-0"
           >
