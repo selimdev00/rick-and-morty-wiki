@@ -2,6 +2,7 @@
 const route = useRoute();
 const router = useRouter();
 
+const perPage = 20;
 const page = ref(route.query.page || 1);
 const filter = ref({
   name: route.query.name || "",
@@ -83,27 +84,13 @@ const genders = [
 
 <template>
   <div class="space-y-4 text-white pb-4 min-h-screen">
-    <div
-      class="bg-[url('/banner.png')] bg-cover bg-center bg-no-repeat h-[50vh] text-white flex items-center justify-center relative overflow-hidden select-none pointer-events-none p-4 text-center"
-    >
-      <div class="space-y-1">
-        <h1 class="font-bold text-4xl bg-black p-2 relative z-10">
-          The Rick And Morty Characters Wiki
-        </h1>
-
-        <img
-          src="/confidential.png"
-          alt=""
-          class="absolute w-[50vw] top-0 right-0"
-        />
-      </div>
-    </div>
+    <Banner />
 
     <div
       class="grid grid-cols-[300px_1fr_300px] items-start max-w-[1400px] mx-auto gap-12"
     >
       <form class="p-4 space-y-4 sticky top-0" @submit.prevent="applyFilters">
-        <h1>Filter characters</h1>
+        <h1>Filter</h1>
 
         <div class="flex flex-col">
           <label for="name">Name</label>
@@ -176,7 +163,7 @@ const genders = [
 
         <div v-else-if="data.results?.length">
           <div class="p-4 grid sm:grid-cols-2 gap-4" ref="catalog">
-            <CharacterCard
+            <CatalogCard
               v-for="card in data.results"
               :item="card"
               :key="card.id"
@@ -200,6 +187,8 @@ const genders = [
           </Paginator>
         </div>
       </div>
+
+      <Navigation />
     </div>
   </div>
 </template>
